@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  api:
+    container_name: farhanApi
+    image: api-example:1.0.0
+    environment:
+      - HOST=examplesqldb
+      - PORT=3306
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=exampleNestJs
+      - BASE_URL=http://kr8tif.lawaapp.com:1338/
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["nest", "start", "sample-nestjs"]
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mysql
+  mysql:
+    container_name: examplesqldb
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=exampleNestJs
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=root
+    volumes:
+      - db:/var/lib/mysql
+volumes:
+  db:
