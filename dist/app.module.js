@@ -8,15 +8,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const user_module_1 = require("./user/user.module");
+const environment_1 = require("./environments/environment");
+const restaurant_entity_1 = require("./restaurant/restaurant.entity");
+const menu_entity_1 = require("./restaurant/menu.entity");
+const user_entity_1 = require("./user/user.entity");
+const transaction_entity_1 = require("./user/transaction.entity");
 const restaurant_module_1 = require("./restaurant/restaurant.module");
+const user_module_1 = require("./user/user.module");
+const ENTITIES = [restaurant_entity_1.Restaurant, menu_entity_1.Menu, user_entity_1.User, transaction_entity_1.Transaction];
+const MODULES = [
+    typeorm_1.TypeOrmModule.forRoot(Object.assign(Object.assign({}, environment_1.typeOrmConfiguration), { entities: (0, typeorm_2.getMetadataArgsStorage)().tables.map(({ target }) => target) })),
+    restaurant_module_1.RestaurantModule,
+    user_module_1.UserModule,
+    typeorm_1.TypeOrmModule.forFeature(ENTITIES)
+];
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UserModule, restaurant_module_1.RestaurantModule],
+        imports: MODULES,
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

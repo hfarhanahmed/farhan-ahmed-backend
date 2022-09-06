@@ -16,7 +16,7 @@ RUN npm ci
 COPY . ./
 
 # for dev
-RUN nest build sms-scheduler
+RUN nest build sample-nestjs
 
 # RUN nest start sms-scheduler
 
