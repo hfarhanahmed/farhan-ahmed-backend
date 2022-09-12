@@ -8,12 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestaurantModule = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const menu_entity_1 = require("./menu.entity");
+const openHours_entity_1 = require("./openHours.entity");
 const restaurant_controller_1 = require("./restaurant.controller");
+const restaurant_entity_1 = require("./restaurant.entity");
 const restaurant_service_1 = require("./restaurant.service");
+const ENTITIES = [
+    restaurant_entity_1.Restaurant,
+    openHours_entity_1.OpenHours,
+    menu_entity_1.Menu
+];
 let RestaurantModule = class RestaurantModule {
 };
 RestaurantModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature(ENTITIES)],
         controllers: [restaurant_controller_1.RestaurantController],
         providers: [restaurant_service_1.RestaurantService]
     })

@@ -4,4 +4,5 @@ export const
 		TRANSACTION: 'transaction',
 		RESTAURANT: 'restaurant',
 		MENU: 'menu',
+		OPEN_Hours: 'openHours',
 	};
