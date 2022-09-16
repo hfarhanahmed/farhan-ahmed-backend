@@ -4,7 +4,7 @@ export interface IRestaurant {
     id?: number;
     restaurantName: string;
     openingHours: string;
-    cashBalance: string;
+    cashBalance: number;
     menu: IMenu[];
 }
 

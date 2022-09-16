@@ -13,8 +13,12 @@ export class User {
     public name: string;
 
     @Column('float')
-    public cashBalance: string;
+    public cashBalance: number;
 
-    @OneToMany((type) => Transaction, (transaction) => transaction.user)
+    @OneToMany((type) => Transaction, (transaction) => transaction.user, {
+        cascade: true,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    })
     public purchaseHistory: Transaction[];
 }

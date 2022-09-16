@@ -15,5 +15,5 @@ export class Menu {
     public dishName: string;
 
     @Column('float')
-    public price: string;
+    public price: number;
 }

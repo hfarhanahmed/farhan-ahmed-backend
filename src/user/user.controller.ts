@@ -1,12 +1,20 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import { Errors } from '../utils/Errors';
+import { APIErrorResponse } from '../interface/APIErrorResponse.interface';
+import { SuccessResponse } from '../interface/SuccessResponse.interface';
 import { UserService } from './user.service';
+import { UserDto } from '../dto/user.dto';
 
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
-    @Get()
-    getHello(): string {
-        return this.userService.getHello();
+    @Post('/add')
+    addUsers(@Body() users: UserDto[]): SuccessResponse | APIErrorResponse {
+        try {
+            return this.userService.addUsers(users);
+        } catch (error) {
+            return { code: Errors.errorGetting.code, message: Errors.errorGetting.message }
+        }
     }
 }

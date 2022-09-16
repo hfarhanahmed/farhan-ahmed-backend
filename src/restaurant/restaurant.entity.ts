@@ -22,7 +22,7 @@ export class Restaurant {
     public openingHours: OpenHours[];
 
     @Column('float')
-    public cashBalance: string;
+    public cashBalance: number;
 
     @OneToMany((type) => Menu, (menu) => menu.restaurant, {
         cascade: true,

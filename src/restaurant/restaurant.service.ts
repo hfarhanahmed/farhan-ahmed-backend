@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ENTITY_NAMES } from 'src/constants';
-import { IOpenHours, IRestaurant } from 'src/interface/IRestaurant.interface';
-import { Like, Repository } from 'typeorm';
+import { ENTITY_NAMES } from '../constants';
+import { IOpenHours } from '../interface/IRestaurant.interface';
+import { Repository } from 'typeorm';
 import { Restaurant } from './restaurant.entity';
 import {
     paginate,
@@ -10,6 +10,7 @@ import {
     IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
 import { SuccessResponse } from '../interface/SuccessResponse.interface';
+import { RestaurantDto } from 'src/dto/restaurant.dto';
 @Injectable()
 export class RestaurantService {
     constructor(@InjectRepository(Restaurant) private readonly restaurantRepository: Repository<Restaurant>) { }
@@ -28,11 +29,35 @@ export class RestaurantService {
         return paginate<Restaurant>(restaurantsQuery, options);
     }
 
-    async createRestaurants(restaurants: IRestaurant[]): Promise<SuccessResponse> {
+    async searchRestaurants(options: IPaginationOptions, isRestaurant: boolean, searchKey: string): Promise<Pagination<Restaurant>> {
+        const restaurantsQuery = this.restaurantRepository
+            .createQueryBuilder(ENTITY_NAMES.RESTAURANT)
+            .leftJoinAndSelect('restaurant.menu', 'menu');
+        if (isRestaurant) {
+            restaurantsQuery.where("restaurant.restaurantName like :key", { key: `%${searchKey}%` });
+        } else {
+            restaurantsQuery.where("menu.dishName like :key", { key: `%${searchKey}%` });
+        }
+
+        return paginate<Restaurant>(restaurantsQuery, options);
+    }
+
+    async filterRestaurants(options: IPaginationOptions, dishes: number, isLess: boolean, minPrice: number, maxPrice: number): Promise<Pagination<Restaurant>> {
+        console.log('values', `${isLess}:${minPrice}:${maxPrice}`);
+        const restaurantsQuery = this.restaurantRepository.createQueryBuilder(ENTITY_NAMES.RESTAURANT);
+        restaurantsQuery.leftJoinAndSelect('restaurant.menu', 'menu')
+            .groupBy('menu.id')
+            .andWhere("menu.price BETWEEN :min and :max", { min: minPrice, max: maxPrice })
+            .andHaving("COUNT(menu.id) > :count", { count: dishes })
+            .orderBy("restaurantName", "ASC");
+        return paginate<Restaurant>(restaurantsQuery, options);
+    }
+
+    createRestaurants(restaurants: RestaurantDto[]): SuccessResponse {
         try {
-            restaurants.forEach(async (restaurant) => {
+            restaurants.forEach((restaurant) => {
                 const openingHours = this.createOpenHoursData(restaurant.openingHours);
-                await this.restaurantRepository.save(this.restaurantRepository.create({ openingHours, cashBalance: restaurant.cashBalance, menu: restaurant.menu, restaurantName: restaurant.restaurantName }));
+                this.restaurantRepository.save(this.restaurantRepository.create({ openingHours, cashBalance: restaurant.cashBalance, menu: restaurant.menu, restaurantName: restaurant.restaurantName }));
             })
             return { success: true };
         } catch (error) {
@@ -46,7 +71,6 @@ export class RestaurantService {
             const hoursCategories = openHoursString.split('/');
             const openHours: IOpenHours[] = [];
             hoursCategories.forEach((timing) => {
-                console.log('test', 'timing', timing);
                 const extractedDayTimes = this.extractDayTime(timing);
                 extractedDayTimes.forEach(item => {
                     const existingItem = openHours.find((existingItem) => existingItem.day === item.day)

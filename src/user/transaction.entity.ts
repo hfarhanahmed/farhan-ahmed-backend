@@ -18,8 +18,8 @@ export class Transaction {
     public restaurantName: string;
 
     @Column('float')
-    public transactionAmount: string;
+    public transactionAmount: number;
 
-    @Column('varchar', { length: 255 })
+    @Column('timestamp')
     public transactionDate: string;
 }
