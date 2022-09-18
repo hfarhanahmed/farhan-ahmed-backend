@@ -4,6 +4,7 @@ import { ENTITY_NAMES } from '../constants';
 
 import { Menu } from './menu.entity';
 import { OpenHours } from './openHours.entity';
+import { Order } from '../order/order.entity';
 
 @Entity(ENTITY_NAMES.RESTAURANT)
 export class Restaurant {
@@ -31,4 +32,11 @@ export class Restaurant {
     })
     @JoinColumn()
     public menu: Menu[];
+
+
+    @OneToMany((type) => Order, (order) => order.user, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+    })
+    public order: Order[];
 }

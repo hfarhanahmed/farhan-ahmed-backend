@@ -177,4 +177,12 @@ export class RestaurantService {
             throw error;
         }
     }
+
+    getRestaurantById(userId: string): Promise<Restaurant> {
+        try {
+            return this.restaurantRepository.findOne(userId)
+        } catch (error) {
+            throw error;
+        }
+    }
 }

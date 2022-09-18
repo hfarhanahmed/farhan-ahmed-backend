@@ -16,11 +16,11 @@ export class UserDto {
 
     @IsArray()
     @ValidateNested({ each: true })
-    @Type(() => Transaction)
-    purchaseHistory: Transaction[];
+    @Type(() => TransactionDTO)
+    purchaseHistory: TransactionDTO[];
 }
 
-export class Transaction {
+export class TransactionDTO {
     @IsUUID()
     @IsOptional()
     @IsNotEmpty()
@@ -40,4 +40,7 @@ export class Transaction {
     @IsString()
     @IsNotEmpty()
     public transactionDate: string;
+
+    @IsOptional()
+    public user?: UserDto;
 }

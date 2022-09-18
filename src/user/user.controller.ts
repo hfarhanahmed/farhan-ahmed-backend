@@ -10,9 +10,9 @@ export class UserController {
     constructor(private readonly userService: UserService) { }
 
     @Post('/add')
-    addUsers(@Body() users: UserDto[]): SuccessResponse | APIErrorResponse {
+    async addUsers(@Body() users: UserDto[]): Promise<SuccessResponse | APIErrorResponse> {
         try {
-            return this.userService.addUsers(users);
+            return await this.userService.addUsers(users);
         } catch (error) {
             return { code: Errors.errorGetting.code, message: Errors.errorGetting.message }
         }

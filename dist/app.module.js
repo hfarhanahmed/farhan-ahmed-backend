@@ -19,11 +19,14 @@ const user_entity_1 = require("./user/user.entity");
 const transaction_entity_1 = require("./user/transaction.entity");
 const restaurant_module_1 = require("./restaurant/restaurant.module");
 const user_module_1 = require("./user/user.module");
-const ENTITIES = [restaurant_entity_1.Restaurant, menu_entity_1.Menu, user_entity_1.User, transaction_entity_1.Transaction];
+const order_module_1 = require("./order/order.module");
+const order_entity_1 = require("./order/order.entity");
+const ENTITIES = [restaurant_entity_1.Restaurant, menu_entity_1.Menu, user_entity_1.User, transaction_entity_1.Transaction, order_entity_1.Order];
 const MODULES = [
     typeorm_1.TypeOrmModule.forRoot(Object.assign(Object.assign({}, environment_1.typeOrmConfiguration), { entities: (0, typeorm_2.getMetadataArgsStorage)().tables.map(({ target }) => target) })),
     restaurant_module_1.RestaurantModule,
     user_module_1.UserModule,
+    order_module_1.OrderModule,
     typeorm_1.TypeOrmModule.forFeature(ENTITIES)
 ];
 let AppModule = class AppModule {

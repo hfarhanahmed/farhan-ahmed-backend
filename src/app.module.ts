@@ -11,10 +11,12 @@ import { User } from './user/user.entity';
 import { Transaction } from './user/transaction.entity';
 import { RestaurantModule } from './restaurant/restaurant.module';
 import { UserModule } from './user/user.module';
+import { OrderModule } from './order/order.module';
+import { Order } from './order/order.entity';
 
 
 
-const ENTITIES = [Restaurant, Menu, User, Transaction];
+const ENTITIES = [Restaurant, Menu, User, Transaction, Order];
 
 const MODULES = [
   TypeOrmModule.forRoot({
@@ -25,6 +27,7 @@ const MODULES = [
   }),
   RestaurantModule,
   UserModule,
+  OrderModule,
   TypeOrmModule.forFeature(ENTITIES)
 ];
 @Module({
