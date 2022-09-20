@@ -17,6 +17,9 @@ export class Order {
     @Column('varchar', { length: 255, default: '' })
     public restaurantName: string;
 
+    @Column('varchar', { length: 255 })
+    public status: string;
+
     @Column('float')
     public totalAmount: number;
 

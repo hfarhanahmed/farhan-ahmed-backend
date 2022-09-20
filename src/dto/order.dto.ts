@@ -24,10 +24,6 @@ export class OrderDto {
     @IsNotEmpty()
     public userName: string;
 
-    @IsString()
-    @IsNotEmpty()
-    public status: string;
-
     // Validates for a non-empty integer array
     @IsArray()
     @ValidateNested({ each: true })

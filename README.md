@@ -4,9 +4,9 @@ This project is based on Nest framework using Typescript as the programming lang
 
 ## Prerequisite
 
-- [Node.js] (https://nodejs.org/en/download/)
+- [Node.js](https://nodejs.org/en/download/)
 - [Nest](https://github.com/nestjs/nest) framework
-- [Docker] (https://www.docker.com/)
+- [Docker](https://www.docker.com/)
 
 ## Run Application
 
@@ -26,12 +26,10 @@ docker-compose build
 docker-compose up
 ```
 
-## API Documentation
-
 ## Coverage Report
 
 <p align="center">
- <img src="https://raw.githubusercontent.com/hfarhanahmed/sample-nestJs-farhan/master/coverage-report.png?token=GHSAT0AAAAAABXXI5X3H3GFNVZFWG7ETGC4YZJORKQ" width="500" alt="Coverage Report" />
+ <img src="https://raw.githubusercontent.com/hfarhanahmed/sample-nestJs-farhan/master/coverage-report.png?token=GHSAT0AAAAAABXXI5X3H3GFNVZFWG7ETGC4YZJORKQ" width="600" alt="Coverage Report" />
 </p>
 
 # About Nest Framework

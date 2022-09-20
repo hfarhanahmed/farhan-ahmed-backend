@@ -1,0 +1,325 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: NestJs Example project
+    url: https://virtserver.swaggerhub.com/hfarhanahmed/Sample-NestJs/1.0.0
+info:
+  version: "1.0.0"
+  title: APi Documentation for NestJs sample project
+  description: >-
+    This is an example of using OAuth2 Application Flow in a specification to
+    describe security to your API.
+paths:
+  /user/add:
+    post:
+      tags:
+        - User
+      summary: Add list of users to DB
+      description: >-
+        Add the list of users along with their transaction record to database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "200":
+          description: "{ success: true }"
+  /restaurant/add:
+    post:
+      tags:
+        - Restaurant
+      summary: Add list of restaurants to DB
+      description: >-
+        Add the list of restaurant along with their menu to database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Restaurant"
+        required: true
+      responses:
+        "200":
+          description: "{ success: true }"
+  /restaurant/list:
+    get:
+      tags:
+        - Restaurant
+      summary: list of restaurants which are open
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaginatedResponse"
+  /restaurant/search:
+    get:
+      tags:
+        - Restaurant
+      summary: list of restaurants which are user search
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: searchBy
+          schema:
+            type: string
+            example: "restaurant | dish"
+          required: true
+        - in: query
+          name: search
+          schema:
+            type: string
+            example: "cafe"
+          required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaginatedResponse"
+  /restaurant/filter:
+    get:
+      tags:
+        - Restaurant
+      summary: list of restaurants which are user search
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+          required: true
+        - in: query
+          name: dishes
+          schema:
+            type: integer
+            example: 6
+          required: true
+        - in: query
+          name: lessThan
+          schema:
+            type: string
+            example: "restaurant | dish"
+          required: true
+        - in: query
+          name: maxPrice
+          schema:
+            type: integer
+            example: 10
+          required: true
+        - in: query
+          name: minPrice
+          schema:
+            type: integer
+            example: 4
+          required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaginatedResponse"
+  /order/create:
+    post:
+      tags:
+        - Order
+      summary: Create an order
+      description: >-
+        Create an order in the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Order"
+        required: true
+      responses:
+        "200":
+          description: "{ success: true }"
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        cashBalance:
+          type: number
+          example: 798.9
+        name:
+          type: string
+          example: "John Doe"
+        purchaseHistory:
+          $ref: "#/components/schemas/Transaction"
+    Transaction:
+      type: object
+      properties:
+        dishName:
+          type: string
+          example: "toast"
+        restaurantName:
+          type: string
+          example: "cafe breakfast"
+        transactionAmount:
+          type: number
+          example: 10.3
+        transactionDate:
+          type: string
+          example: "04/03/2020 01:56 PM"
+    Restaurant:
+      type: object
+      properties:
+        openingHours:
+          type: string
+          example: "Mon, Fri 2:30 pm - 8 pm / Tues 11 am - 2 pm / Weds 1:15 pm - 3:15 am / Thurs 10 am - 3:15 am / Sat - Sun 10:45 am - 5 pm"
+        restaurantName:
+          type: string
+          example: "cafe breakfast"
+        cashBalance:
+          type: number
+          example: 1920.32
+        menu:
+          $ref: "#/components/schemas/Menu"
+    Menu:
+      type: object
+      properties:
+        dishName:
+          type: string
+          example: "toast"
+        price:
+          type: string
+          example: 10.3
+    Order:
+      type: object
+      properties:
+        restaurantId:
+          type: string
+          format: uuid
+          example: "02d6c591-6dcd-4fdd-abca-29092ba2b913"
+        restaurantName:
+          type: string
+          example: "cafe breakfast"
+        userId:
+          type: string
+          format: uuid
+          example: "a44a69dc-b145-4c5c-8616-d4187a4923dc"
+        userName:
+          type: string
+          example: "John Doe"
+        orderedDishes:
+          $ref: "#/components/schemas/OrderedDishes"
+    OrderedDishes:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "02d6c591-6dcd-4fdd-abca-29092ba2b913"
+        dishName:
+          type: string
+          example: "toast"
+        price:
+          type: string
+          example: 10.3
+    OpenHours:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "02d6c591-6dcd-4fdd-abca-29092ba2b913"
+        day:
+          type: string
+          example: "Mon"
+        startTime:
+          type: string
+          example: "11:00"
+        endTime:
+          type: string
+          example: "23:00"
+        breakStart:
+          type: string
+          example: "13:00"
+        breakEnd:
+          type: string
+          example: "14:30"
+    RestaurantResponse:
+      type: object
+      properties:
+        openingHours:
+          $ref: "#/components/schemas/OpenHours"
+        restaurantName:
+          type: string
+          example: "cafe breakfast"
+        cashBalance:
+          type: number
+          example: 1920.32
+        menu:
+          $ref: "#/components/schemas/OrderedDishes"
+    PaginatedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/RestaurantResponse"
+        metadata:
+          $ref: "#/components/schemas/PaginatedMetadata"
+    PaginatedMetadata:
+      type: object
+      properties:
+        totalItems:
+          type: number
+          example: 0
+        itemCount:
+          type: number
+          example: 0
+        itemsPerPage:
+          type: number
+          example: 20
+        totalPages:
+          type: number
+          example: 0
+        currentPage:
+          type: number
+          example: 1

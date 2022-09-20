@@ -31,7 +31,7 @@ export class OrderService {
                 user.cashBalance -= totalAmount;
                 restaurant.cashBalance += totalAmount;
 
-                await manager.getRepository(Order).save(this.orderRepository.create({ transactions, user, restaurant, totalAmount, userName: order.userName, restaurantName: restaurant.restaurantName, }));
+                await manager.getRepository(Order).save(this.orderRepository.create({ transactions, user, restaurant, totalAmount, userName: order.userName, restaurantName: restaurant.restaurantName, status: 'initial' }));
                 // Transaction: commit()
             });
             return { success: true };
