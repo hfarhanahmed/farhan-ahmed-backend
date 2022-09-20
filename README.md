@@ -31,7 +31,7 @@ docker-compose up
 ## Coverage Report
 
 <p align="center">
- <img src="https://github.com/hfarhanahmed/sample-nestJs-farhan/coverage-report.png" width="120" alt="Nest Logo" />
+ <img src="https://raw.githubusercontent.com/hfarhanahmed/sample-nestJs-farhan/master/coverage-report.png?token=GHSAT0AAAAAABXXI5X3H3GFNVZFWG7ETGC4YZJORKQ" width="500" alt="Coverage Report" />
 </p>
 
 # About Nest Framework
