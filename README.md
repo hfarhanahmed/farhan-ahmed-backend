@@ -1,3 +1,41 @@
+# Introduction
+
+This project is based on Nest framework using Typescript as the programming language and Postgres database. Docker is also used so you can run the whole application easily.
+
+## Prerequisite
+
+- [Node.js] (https://nodejs.org/en/download/)
+- [Nest](https://github.com/nestjs/nest) framework
+- [Docker] (https://www.docker.com/)
+
+## Run Application
+
+Clone the project in the desired folder, open the terminal in the folder the project is cloned and run the following commands in sequence (make sure port 3000 and 3306 are not in use).
+
+```bash
+# To go into the folder of the project
+cd sample-nestJs
+
+# Install all dependancies
+npm i
+
+# Build the docker image
+docker-compose build
+
+# Run the created docker image
+docker-compose up
+```
+
+## API Documentation
+
+## Coverage Report
+
+<p align="center">
+ <img src="https://github.com/hfarhanahmed/sample-nestJs-farhan/coverage-report.png" width="120" alt="Nest Logo" />
+</p>
+
+# About Nest Framework
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
