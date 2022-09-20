@@ -14,7 +14,7 @@ Clone the project in the desired folder, open the terminal in the folder the pro
 
 ```bash
 # To go into the folder of the project
-cd sample-nestJs
+cd farhan-ahmed-backend
 
 # Install all dependancies
 npm i

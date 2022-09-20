@@ -16,8 +16,8 @@ RUN npm ci
 COPY . ./
 
 # for dev
-RUN nest build sample-nestjs
+RUN nest build
 
-# RUN nest start sms-scheduler
+# RUN nest start
 
 EXPOSE 3000
