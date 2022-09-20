@@ -26,6 +26,10 @@ docker-compose build
 docker-compose up
 ```
 
+## API Documentation
+
+Please follow this link for swagger documentation (https://app.swaggerhub.com/apis/hfarhanahmed/Sample-NestJs/1.0.0). Swagger yaml file is also attached in the project.
+
 ## Coverage Report
 
 <p align="center">
