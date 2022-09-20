@@ -14,10 +14,11 @@ export class RestaurantController {
     @Get('list')
     async listRestaurants(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
-        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,): Promise<Pagination<Restaurant> | APIErrorResponse> {
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+        @Query('date', new DefaultValuePipe(new Date().toISOString())) date: string = new Date().toISOString()): Promise<Pagination<Restaurant> | APIErrorResponse> {
         try {
             limit = limit > 100 ? 100 : limit;
-            return await this.restaurantService.getRestaurants({ page, limit });
+            return await this.restaurantService.getRestaurants({ page, limit }, date);
         } catch (error) {
             return { code: Errors.errorGetting.code, message: Errors.errorGetting.message }
         }

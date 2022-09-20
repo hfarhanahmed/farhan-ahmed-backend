@@ -15,13 +15,14 @@ import { RestaurantDto } from 'src/dto/restaurant.dto';
 export class RestaurantService {
     constructor(@InjectRepository(Restaurant) private readonly restaurantRepository: Repository<Restaurant>) { }
 
-    async getRestaurants(options: IPaginationOptions): Promise<Pagination<Restaurant>> {
+    async getRestaurants(options: IPaginationOptions, date: string): Promise<Pagination<Restaurant>> {
         const dayNames = ["Sun", "Mon", "Tues", "Weds", "Thurs", "Fri", "Sat"];
-        let dateTime = new Date();
+        let dateTime = new Date(date);
         const dayOfWeek = dateTime.getDay();
         const restaurantsQuery = this.restaurantRepository
             .createQueryBuilder(ENTITY_NAMES.RESTAURANT)
-            .leftJoinAndSelect('restaurant.openingHours', 'openingHours')
+            .leftJoin('restaurant.openingHours', 'openingHours')
+            .leftJoinAndSelect('restaurant.menu', 'menu')
             .where("openingHours.day = :day", { day: dayNames[dayOfWeek] })
             .andWhere("openingHours.startTime <= :time", { time: `${dateTime.getHours()}:${dateTime.getMinutes()}` })
             .andWhere("openingHours.endTime >= :time", { time: `${dateTime.getHours()}:${dateTime.getMinutes()}` });
@@ -46,9 +47,13 @@ export class RestaurantService {
         const restaurantsQuery = this.restaurantRepository.createQueryBuilder(ENTITY_NAMES.RESTAURANT);
         restaurantsQuery.leftJoinAndSelect('restaurant.menu', 'menu')
             .groupBy('menu.id')
-            .andWhere("menu.price BETWEEN :min and :max", { min: minPrice, max: maxPrice })
-            .andHaving("COUNT(menu.id) > :count", { count: dishes })
-            .orderBy("restaurantName", "ASC");
+            .andWhere("menu.price BETWEEN :min and :max", { min: minPrice, max: maxPrice });
+        if (isLess) {
+            restaurantsQuery.andHaving("COUNT(menu.id) < :count", { count: dishes });
+        } else {
+            restaurantsQuery.andHaving("COUNT(menu.id) > :count", { count: dishes });
+        }
+        restaurantsQuery.orderBy("restaurantName", "ASC");
         return paginate<Restaurant>(restaurantsQuery, options);
     }
 

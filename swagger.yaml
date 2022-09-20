@@ -56,11 +56,19 @@ paths:
           name: limit
           schema:
             type: integer
+            example: 10
           required: false
         - in: query
           name: page
           schema:
             type: integer
+            example: 1
+          required: true
+        - in: query
+          name: date
+          schema:
+            type: string
+            example: "2022-09-20 07:09:00"
           required: true
       responses:
         "200":
@@ -81,11 +89,13 @@ paths:
           name: limit
           schema:
             type: integer
+            example: 10
           required: false
         - in: query
           name: page
           schema:
             type: integer
+            example: 1
           required: true
         - in: query
           name: searchBy
@@ -112,7 +122,7 @@ paths:
     get:
       tags:
         - Restaurant
-      summary: list of restaurants which are user search
+      summary: list of restaurants filtered by min - max price & number of dishes
       parameters:
         - in: query
           name: limit
@@ -136,7 +146,7 @@ paths:
           name: lessThan
           schema:
             type: string
-            example: "restaurant | dish"
+            example: "lessThan | greaterThan"
           required: true
         - in: query
           name: maxPrice
@@ -190,7 +200,9 @@ components:
           type: string
           example: "John Doe"
         purchaseHistory:
-          $ref: "#/components/schemas/Transaction"
+          type: array
+          items:
+            $ref: "#/components/schemas/Transaction"
     Transaction:
       type: object
       properties:
@@ -219,7 +231,9 @@ components:
           type: number
           example: 1920.32
         menu:
-          $ref: "#/components/schemas/Menu"
+          type: array
+          items:
+            $ref: "#/components/schemas/Menu"
     Menu:
       type: object
       properties:
