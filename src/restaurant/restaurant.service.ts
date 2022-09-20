@@ -43,7 +43,6 @@ export class RestaurantService {
     }
 
     async filterRestaurants(options: IPaginationOptions, dishes: number, isLess: boolean, minPrice: number, maxPrice: number): Promise<Pagination<Restaurant>> {
-        console.log('values', `${isLess}:${minPrice}:${maxPrice}`);
         const restaurantsQuery = this.restaurantRepository.createQueryBuilder(ENTITY_NAMES.RESTAURANT);
         restaurantsQuery.leftJoinAndSelect('restaurant.menu', 'menu')
             .groupBy('menu.id')

@@ -15,9 +15,9 @@ export class OrderService {
 
     async createOrder(order: OrderDto): Promise<SuccessResponse> {
         try {
-
             await getManager().transaction(async (manager) => {
                 // Transaction: begin()
+
                 const user = await manager.getRepository(User).findOne(order.userId);
                 const restaurant = await manager.getRepository(Restaurant).findOne(order.restaurantId);
 
@@ -41,7 +41,7 @@ export class OrderService {
 
     }
 
-    async getRestaurants(options: IPaginationOptions): Promise<Pagination<Order>> {
+    async getOrders(options: IPaginationOptions): Promise<Pagination<Order>> {
         return paginate<Order>(this.orderRepository, options);
     }
 }

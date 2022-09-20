@@ -8,8 +8,7 @@ import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>,
-        @InjectRepository(Transaction) private readonly transactionRepository: Repository<Transaction>) { }
+    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
 
     async addUsers(users: UserDto[]): Promise<SuccessResponse> {
         try {
@@ -19,26 +18,6 @@ export class UserService {
             })
             await Promise.all(promises);
             return { success: true };
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async addTransactions(transactions: Transaction[]): Promise<Transaction[]> {
-        try {
-            const promises: Promise<Transaction>[] = [];
-            transactions.forEach((transaction) => {
-                promises.push(this.transactionRepository.save(this.transactionRepository.create(transaction)));
-            })
-            return await Promise.all(promises);
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    getUserById(userId: string): Promise<User> {
-        try {
-            return this.userRepository.findOne(userId)
         } catch (error) {
             throw error;
         }

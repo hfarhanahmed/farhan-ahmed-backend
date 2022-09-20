@@ -33,10 +33,10 @@ describe('UserController', () => {
   });
 
   describe('addUsers', () => {
-    it('should return { success: true }', () => {
+    it('should return { success: true }', async () => {
       const response = { success: true };
-      jest.spyOn(service, 'addUsers').mockImplementation(() => response);
-      expect(controller.addUsers([
+      jest.spyOn(service, 'addUsers').mockImplementation(() => Promise.resolve(response));
+      expect(await controller.addUsers([
         {
           cashBalance: 700.7,
           name: "Edith Johnson",
