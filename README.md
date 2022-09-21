@@ -33,7 +33,7 @@ Please follow this link for swagger documentation (https://app.swaggerhub.com/ap
 ## Coverage Report
 
 <p align="center">
- <img src="https://raw.githubusercontent.com/hfarhanahmed/farhan-ahmed-backend/master/coverage-report.png?token=GHSAT0AAAAAABXXI5X355YYPMOC6IV5XEHUYZKWB7Q" width="600" alt="Coverage Report" />
+ <img src="https://i.ibb.co/9bpbpjN/coverage-report.png" width="600" alt="Coverage Report" />
 </p>
 
 # About Nest Framework
